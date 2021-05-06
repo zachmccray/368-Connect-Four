@@ -103,14 +103,15 @@ function checkWin(x, y) {
         }
     }
     //Check Vertical
-    for(let i = 0; i < rows; i++){
+    for(let i = 0; i < rows - 3; i++){
         for(let j = 0; j < cols; j++){
-            if(model.board[i][j] != 0){
+            if(model.board[i][j] != 0)
+            {
                 check = model.board[i][j];
             }
             else{ continue; }
             
-            if(check == model.board[i-1][j] && check == model.board[i-2][j] && check == model.board[i-3][j]){
+            if(check == model.board[i+1][j] && check == model.board[i+2][j] && check == model.board[i+3][j]){
                 console.log(`Vertical Winner! Player: ${check == 1 ? 'Red' : 'Blue'} winning position row:${i} col:${j}`);
                 return(check);
             }
@@ -130,7 +131,6 @@ function checkWin(x, y) {
             }
         }
     }
-
     //Check Diagonals: bottom right to top left
     for(let i = 3; i < rows; i++){
        for(let j = 3; j < cols; j++){
@@ -147,7 +147,6 @@ function checkWin(x, y) {
     }
     return(0);
 }
-
 function resetBoard(){
     for(let i = 0; i < 6; i++){
         for(let j = 0; j < 7; j++){
@@ -159,6 +158,14 @@ function resetBoard(){
     winnerText.innerHTML = "Winner:";
     winnerText.style.color = "black";
     splat();
+}
+
+function nextPlayer(){
+    if (model.next == 1) {
+        model.next = 2
+    } else if (model.next == 2) {
+        model.next = 1
+    }
 }
 
 function roundMe(x){ return Math.ceil((x-20)/100)-1 }
@@ -173,36 +180,27 @@ function roundMe(x){ return Math.ceil((x-20)/100)-1 }
         return;
     }
     
-    if(model.board[j][i] != 0){
-        return;
-    }
-    else{
-        if(model.board[5][i] == 0){
-            model.board[5][i] = model.next;
-        }
-        else{
-            for(let k = 0; k < 6; k++){
-                if(model.board[k][i] != 0){
-                    model.board[k-1][i] = model.next;
-                    break;
-                }
+    if(model.board[j][i] != 0){ return; }
+    else if(model.board[5][i] == 0){
+        model.board[5][i] = model.next;
+        nextPlayer();
+    } else{
+        for(let k = 1; k < 6; k++){
+            if(model.board[k][i] != 0){
+                model.board[k-1][i] = model.next;
+                nextPlayer();
+                break;
             }
         }
-        splat();
+    }
+    
+    splat();
+    console.log(model.board);
 
-        winner = checkWin();
-        if (winner != 0){
-            //resetBoard();
-            let winnerText = document.getElementById("winner") 
-            winnerText.innerHTML = `Winner: ${winner == 1 ? 'Red' : 'Blue'}`;
-            winnerText.style.color = `${winner == 1 ? "#e8000d" : "#0051ba"}`;
-        }
-         
-        console.log(model.board);
-    }
-    if (model.next == 1) {
-      model.next = 2
-    } else if (model.next == 2) {
-      model.next = 1
-    }
+    winner = checkWin();
+    if (winner != 0){
+        let winnerText = document.getElementById("winner") 
+        winnerText.innerHTML = `Winner: ${winner == 1 ? 'Red' : 'Blue'}`;
+        winnerText.style.color = `${winner == 1 ? "#e8000d" : "#0051ba"}`;
+    }   
 })
