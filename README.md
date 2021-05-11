@@ -5,4 +5,4 @@ Spring 2021
 
 *University of Kansas*
 
-You can access the game [here](https://rift-glitter-rondeletia.glitch.me/)
+You can access the game [here](https://zachmccray-connect-four.glitch.me/)
