@@ -1,8 +1,6 @@
 # Connect-Four in JavaScript
-EECS368 Final Project
 
-Spring 2021
+#### Spring 2021
+EECS368 Final Project, *University of Kansas*
 
-*University of Kansas*
-
-You can access the game [here](https://zachmccray-connect-four.glitch.me/)
+You can access the game [here](https://zachmccray-connect-four.glitch.me/).
